@@ -1,0 +1,39 @@
+function Tgas = Tgas(y,Ds,time,t_metabolis,load1,load2)  % ropi logo kaysis
+
+cyl = [3 6 5 4 7];  % seira kaysis kilindron DoF
+
+P = zeros(12,1);  % arxikopoiisi
+
+% diafora fasis kilindron
+n = 5;
+aa = 360/n;
+a = aa*pi/180;
+a = [0 1*a 2*a 3*a 4*a];
+
+
+w25=2*pi/60*62.4;
+w50=2*pi/60*78.6;
+w75=2*pi/60*89.9;
+w100=2*pi/60*99;
+if load1==25
+    Ttemp=Tgas25;
+elseif load1 ==50
+    Ttemp=Tgas50;
+elseif load1 ==75
+    Ttemp
+
+if time<t_metabolis
+    
+end
+
+
+
+B = 0.5;     % bore (m)
+l = 2.05;   % piston rod
+r = 2.05/2;  % crankshaft, stroke/2
+
+%Tgas=P;  (mono gia plot kateutheian tin piesi)
+Tgas = - Ds*(pi/4)*(B^2)*P;  % eksisosi ropis logo kaysis (epeksigisi sto main gia to "-")
+
+end
+
