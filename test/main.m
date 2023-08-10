@@ -70,8 +70,8 @@ idiosixnotites_rpm = 60*idiosixnotites/(2*pi);                % rpm
 orizousa = det(K*eigenVectors - J*eigenVectors*eigenValues);  % epalithefsi oti vgainei miden h orizousa
 idiosixnotites_rpm2 = diag(idiosixnotites_rpm);               % metatrepei ton diagonio pinaka se pinaka sthlh
 
-dtmax = 10^(-4);    
-opts = odeset('MaxStep',dtmax,'RelTol',1e-8,'AbsTol',1e-8);
+dtmax = 10^(-3);    
+opts = odeset('MaxStep',dtmax,'RelTol',1e-6,'AbsTol',1e-6);
 
 
 initial_conditions = zeros(1,24)'; % arxikopoiisi
@@ -87,7 +87,7 @@ start_rpm = 60;
 initial_conditions(13:24) = 2*pi*start_rpm/60;    % arxiki sinthiki goniakis taxititas (ola ta DoF idia arxiki sinthiki gonias)
 %initial_conditions(13:24) = 0;                   % starting engine
 
-[time,y] = ode23tb(@main_func,[0 20],initial_conditions,opts); % epilisi vasikis eksisosis me ode
+[time,y] = ode23tb(@main_func,[0 13],initial_conditions,opts); % epilisi vasikis eksisosis me ode
 for i=1:length(y)
     y_main = main_func(time(i),y(i,:)');
     y_dotdot(i,:) = y_main(13:24);

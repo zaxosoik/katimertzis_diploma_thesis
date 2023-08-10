@@ -2,24 +2,31 @@ function Tgas = Tgas(y,Ds,rpm)  % ropi logo kaysis
 B = 0.5;     % bore (m)
 
 load =[25,50,75,100];
-w =2*pi*[60,78.6,89.9,99]/60; % RPM gia 25,50,75,100% load
+w =2*pi*[59.37,79.7,89.96,99.08]/60; % RPM gia 25,50,75,100% load
 %w = 2*pi*w/60;
 for i=1:length(w)
     p_load(:,i) = p_interpol(y,load(i));
 end
  p_load_final = p_load(:,1);
 for i=1:length(w)-1
-    if rpm>=w(i) && rpm<w(i+1)
-        if rpm>=w(4)
-            p_load_final = p_load(:,4);
+    if rpm>=w(i) && rpm<w(i+1) 
+        %if rpm>=96*2*pi/60
+        %    p_load_final = p_load(:,4);
+        %    break
+        %else
+            %p_load_final = perithorio(rpm,2*pi*99.08/60)*(((w(i+1)-rpm)/(w(i+1)-w(i))*p_load(:,i)+(-w(i)+rpm)/(w(i+1)-w(i))*p_load(:,i+1)));
+            p_load_final = perithorio(rpm,2*pi*99.08/60)*((p_load(:,i)+(-w(i)+rpm)/(w(i+1)-w(i))*(p_load(:,i+1)-p_load(:,i))));
+
+            %p_load_final = 1*(((w(i+1)-rpm)/(w(i+1)-w(i))*p_load(:,i)+(-w(i)+rpm)/(w(i+1)-w(i))*p_load(:,i+1)));
             break
-        else
-            p_load_final = perithorio(rpm,2*pi*99/60)*(((w(i+1)-rpm)/(w(i+1)-w(i))*p_load(:,i)+(-w(i)+rpm)/(w(i+1)-w(i))*p_load(:,i+1)));
-            break
-        end
+        %end
     %elseif i==1 && rpm<w(1)
     %    p_load_final =p_load(:,1);
     %    break
+    
+    elseif i==length(w)-1 && rpm>=w(i+1)
+        p_load_final = p_load(:,4);
+        break
     end
 end
 %p_load_final = perithorio(rpm,6350000,99*2*pi/60)*p_load_final;
